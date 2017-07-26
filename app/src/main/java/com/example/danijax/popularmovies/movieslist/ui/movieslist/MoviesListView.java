@@ -41,12 +41,12 @@ public class MoviesListView extends BaseFragment implements MoviesContract.View 
         return view;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ((MovieDbApplication) getActivity().getApplication()).getMovieDbComponent().inject(this);
-        moviesPresenter.attach(this);
-    }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        ((MovieDbApplication) getActivity().getApplication()).getMovieDbComponent().inject(this);
+//        moviesPresenter.attach(this);
+//    }
 
     @Override
     public void onDestroy() {

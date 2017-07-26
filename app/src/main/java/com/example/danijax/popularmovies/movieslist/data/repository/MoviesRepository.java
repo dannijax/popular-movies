@@ -1,5 +1,6 @@
 package com.example.danijax.popularmovies.movieslist.data.repository;
 
+import com.example.danijax.popularmovies.BuildConfig;
 import com.example.danijax.popularmovies.movieslist.data.model.Movies;
 import com.example.danijax.popularmovies.movieslist.data.model.ResponseWrapper;
 import com.example.danijax.popularmovies.movieslist.data.network.ApiClient;
@@ -24,7 +25,7 @@ public class MoviesRepository  implements Repository<Movies>{
 
     @Override
     public Observable<List<Movies>> getAll() {
-        return apiClient.getMovies()
+        return apiClient.getMovies(BuildConfig.API_KEY)
                 .map(new Function<ResponseWrapper<Movies>, List<Movies>>() {
                     @Override
                     public List<Movies> apply(@NonNull ResponseWrapper<Movies> moviesResponseWrapper) throws Exception {
