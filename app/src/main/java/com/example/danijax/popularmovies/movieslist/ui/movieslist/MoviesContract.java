@@ -1,5 +1,7 @@
 package com.example.danijax.popularmovies.movieslist.ui.movieslist;
 
+import com.example.danijax.popularmovies.movieslist.data.model.Movies;
+
 import java.util.List;
 
 /**

@@ -1,4 +1,6 @@
-package com.example.danijax.popularmovies.movieslist.injection;
+package com.example.danijax.popularmovies.movieslist.injection.module;
+
+import com.example.danijax.popularmovies.BuildConfig;
 
 import javax.inject.Singleton;
 
@@ -11,16 +13,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by danijax on 7/26/17.
  */
-@Module()
+@Module(includes = NetworkModule.class)
 public class MovieDbApiModule {
 
     @Provides
     @Singleton
     public Retrofit retrofit(OkHttpClient client) {
         return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASEURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
+    }
+
+    @Singleton
+    @Provides
+    public MovieDbApiModule movieDbApiModule(Retrofit retrofit) {
+        return retrofit.create(MovieDbApiModule.class);
     }
 }

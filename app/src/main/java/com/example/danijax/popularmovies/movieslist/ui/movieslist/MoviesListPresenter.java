@@ -1,5 +1,6 @@
 package com.example.danijax.popularmovies.movieslist.ui.movieslist;
 
+import com.example.danijax.popularmovies.movieslist.data.model.Movies;
 import com.example.danijax.popularmovies.movieslist.data.repository.Repository;
 
 import java.util.List;
