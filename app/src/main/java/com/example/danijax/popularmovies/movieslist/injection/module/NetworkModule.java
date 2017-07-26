@@ -21,7 +21,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-@Module
+@Module(includes = ContextModule.class)
 public class NetworkModule {
     @Provides
     @Singleton

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.danijax.popularmovies.movieslist.injection.components.DaggerMovieDbComponent;
 import com.example.danijax.popularmovies.movieslist.injection.components.MovieDbComponent;
+import com.example.danijax.popularmovies.movieslist.injection.module.ContextModule;
 import com.facebook.stetho.Stetho;
 
 /**
@@ -21,6 +22,7 @@ public class MovieDbApplication extends Application {
 
         movieDbComponent = DaggerMovieDbComponent
                 .builder()
+                .contextModule(new ContextModule(this))
                 .build();
     }
 

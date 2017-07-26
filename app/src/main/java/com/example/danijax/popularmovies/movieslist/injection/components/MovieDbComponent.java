@@ -3,6 +3,7 @@ package com.example.danijax.popularmovies.movieslist.injection.components;
 import com.example.danijax.popularmovies.movieslist.injection.module.MovieDbApiModule;
 import com.example.danijax.popularmovies.movieslist.injection.module.NetworkModule;
 import com.example.danijax.popularmovies.movieslist.injection.module.RepositoryModule;
+import com.example.danijax.popularmovies.movieslist.ui.movieslist.MoviesListView;
 
 import javax.inject.Singleton;
 
@@ -14,4 +15,6 @@ import dagger.Component;
 @Singleton
 @Component(modules = {MovieDbApiModule.class, NetworkModule.class, RepositoryModule.class})
 public interface MovieDbComponent {
+
+    void inject(MoviesListView moviesListView);
 }
