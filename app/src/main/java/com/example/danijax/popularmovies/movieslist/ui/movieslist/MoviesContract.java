@@ -1,6 +1,8 @@
 package com.example.danijax.popularmovies.movieslist.ui.movieslist;
 
 import com.example.danijax.popularmovies.movieslist.data.model.Movies;
+import com.example.danijax.popularmovies.movieslist.ui.base.BasePresenter;
+import com.example.danijax.popularmovies.movieslist.ui.base.BaseView;
 
 import java.util.List;
 
@@ -10,13 +12,16 @@ import java.util.List;
 
 public interface MoviesContract {
 
-    interface View {
+    interface View extends BaseView {
         void loadMovies(List<Movies> movies);
-
         void showLoadingUi();
+        void showError();
+        void showEmptyMovies();
+
     }
 
-    interface Presenter {
+    interface Presenter extends BasePresenter {
         void loadMovies(List<Movies> movies);
+        void getAllMovies();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.danijax.popularmovies.movieslist.injection.module;
 
 import com.example.danijax.popularmovies.BuildConfig;
+import com.example.danijax.popularmovies.movieslist.data.network.ApiClient;
 
 import javax.inject.Singleton;
 
@@ -28,7 +29,7 @@ public class MovieDbApiModule {
 
     @Singleton
     @Provides
-    public MovieDbApiModule movieDbApiModule(Retrofit retrofit) {
-        return retrofit.create(MovieDbApiModule.class);
+    public ApiClient apiClient(Retrofit retrofit) {
+        return retrofit.create(ApiClient.class);
     }
 }

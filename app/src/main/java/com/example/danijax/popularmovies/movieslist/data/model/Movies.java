@@ -2,6 +2,8 @@
 package com.example.danijax.popularmovies.movieslist.data.model;
 
 import java.util.List;
+import java.util.Objects;
+
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
@@ -35,6 +37,13 @@ public class Movies {
     private Double mVoteAverage;
     @SerializedName("vote_count")
     private Long mVoteCount;
+
+    public Movies() {
+    }
+
+    public Movies(String mTitle) {
+        this.mTitle = mTitle;
+    }
 
     public Boolean getAdult() {
         return mAdult;
@@ -148,4 +157,53 @@ public class Movies {
         mVoteCount = voteCount;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movies movies = (Movies) o;
+        return Objects.equals(mAdult, movies.mAdult) &&
+                Objects.equals(mBackdropPath, movies.mBackdropPath) &&
+                Objects.equals(mGenreIds, movies.mGenreIds) &&
+                Objects.equals(mId, movies.mId) &&
+                Objects.equals(mOriginalLanguage, movies.mOriginalLanguage) &&
+                Objects.equals(mOriginalTitle, movies.mOriginalTitle) &&
+                Objects.equals(mOverview, movies.mOverview) &&
+                Objects.equals(mPopularity, movies.mPopularity) &&
+                Objects.equals(mPosterPath, movies.mPosterPath) &&
+                Objects.equals(mReleaseDate, movies.mReleaseDate) &&
+                Objects.equals(mTitle, movies.mTitle) &&
+                Objects.equals(mVideo, movies.mVideo) &&
+                Objects.equals(mVoteAverage, movies.mVoteAverage) &&
+                Objects.equals(mVoteCount, movies.mVoteCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mAdult, mBackdropPath, mGenreIds, mId, mOriginalLanguage,
+                mOriginalTitle, mOverview, mPopularity, mPosterPath, mReleaseDate, mTitle, mVideo,
+                mVoteAverage, mVoteCount);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Movies{");
+        sb.append("mAdult=").append(mAdult);
+        sb.append(", mBackdropPath=").append(mBackdropPath);
+        sb.append(", mGenreIds=").append(mGenreIds);
+        sb.append(", mId=").append(mId);
+        sb.append(", mOriginalLanguage='").append(mOriginalLanguage).append('\'');
+        sb.append(", mOriginalTitle='").append(mOriginalTitle).append('\'');
+        sb.append(", mOverview='").append(mOverview).append('\'');
+        sb.append(", mPopularity=").append(mPopularity);
+        sb.append(", mPosterPath=").append(mPosterPath);
+        sb.append(", mReleaseDate='").append(mReleaseDate).append('\'');
+        sb.append(", mTitle='").append(mTitle).append('\'');
+        sb.append(", mVideo=").append(mVideo);
+        sb.append(", mVoteAverage=").append(mVoteAverage);
+        sb.append(", mVoteCount=").append(mVoteCount);
+        sb.append('}');
+        return sb.toString();
+    }
 }
