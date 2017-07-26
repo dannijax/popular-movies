@@ -1,5 +1,7 @@
 package com.example.danijax.popularmovies.movieslist.ui.movieslist;
 
+import android.util.Log;
+
 import com.example.danijax.popularmovies.movieslist.data.model.DefaultObserver;
 import com.example.danijax.popularmovies.movieslist.data.model.Movies;
 import com.example.danijax.popularmovies.movieslist.data.repository.Repository;
@@ -19,6 +21,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MoviesListPresenter implements MoviesContract.Presenter {
 
+    private static final String TAG = MoviesListPresenter.class.getName();
+
     private MoviesContract.View movieListView;
 
     private Repository moviesRepository;
@@ -37,9 +41,7 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
 
     @Override
     public void getAllMovies() {
-        moviesRepository.getAll()
-            .subscribe();
-        //subscribeToMoviesList(moviesRepository.getAll());
+        subscribeToMoviesList(moviesRepository.getAll());
 
     }
 
@@ -71,12 +73,13 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
     private class MoviesListObserver extends DefaultObserver<List<Movies>> {
         @Override
         public void onNext(@NonNull List<Movies> movies) {
-            super.onNext(movies);
+            loadMovies(movies);
         }
 
         @Override
         public void onError(@NonNull Throwable e) {
-            super.onError(e);
+            Log.e(TAG, "onError: " + e.getMessage());
+
         }
 
         @Override

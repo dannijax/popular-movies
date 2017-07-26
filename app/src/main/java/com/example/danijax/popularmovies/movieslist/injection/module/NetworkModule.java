@@ -2,6 +2,7 @@ package com.example.danijax.popularmovies.movieslist.injection.module;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.danijax.popularmovies.BuildConfig;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -19,26 +20,32 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 
 @Module(includes = ContextModule.class)
 public class NetworkModule {
+
     @Provides
     @Singleton
-    public OkHttpClient OkhttpClient(Cache cache) {
-        return new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
+    public HttpLoggingInterceptor httpLoggingInterceptor() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(
+                new HttpLoggingInterceptor.Logger() {
                     @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request original = chain.request();
-                        Request.Builder requestBuilder = original.newBuilder()
-                                .header("Authorization", BuildConfig.API_KEY);
-
-                        Request request = requestBuilder.build();
-                        return chain.proceed(request);
+                    public void log(String message) {
+                        Log.e("Network", "log: " + message);
                     }
-                })
-                .addNetworkInterceptor(new StethoInterceptor())
+
+                });
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return interceptor;
+    }
+    @Provides
+    @Singleton
+    public OkHttpClient OkhttpClient(Cache cache, HttpLoggingInterceptor interceptor) {
+        return new OkHttpClient.Builder()
+                //.addInterceptor()
+                .addNetworkInterceptor(interceptor)
                 .cache(cache)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
@@ -60,4 +67,16 @@ public class NetworkModule {
         return new File(context.getCacheDir(), "moviesdb_cache");
 
     }
+
+//    new Interceptor() {
+//        @Override
+//        public Response intercept(Interceptor.Chain chain) throws IOException {
+//            Request original = chain.request();
+//            Request.Builder requestBuilder = original.newBuilder()
+//                    .header("X-Authorization", BuildConfig.API_KEY);
+//
+//            Request request = requestBuilder.build();
+//            return chain.proceed(request);
+//        }
+//    }
 }
