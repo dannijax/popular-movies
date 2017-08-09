@@ -36,6 +36,7 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
 
     @Override
     public void loadMovies(List<Movies> movies) {
+        movieListView.showLoadingUi(true);
         movieListView.loadMovies(movies);
     }
 
@@ -74,17 +75,18 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
         @Override
         public void onNext(@NonNull List<Movies> movies) {
             loadMovies(movies);
+            movieListView.showLoadingUi(false);
         }
 
         @Override
         public void onError(@NonNull Throwable e) {
-            Log.e(TAG, "onError: " + e.getMessage());
-
+            movieListView.showLoadingUi(false);
         }
 
         @Override
         public void onComplete() {
             super.onComplete();
+            movieListView.showLoadingUi(false);
         }
     }
 }

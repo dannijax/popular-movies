@@ -1,9 +1,13 @@
 package com.example.danijax.popularmovies.movieslist.ui.movieslist;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.danijax.popularmovies.R;
 import com.example.danijax.popularmovies.movieslist.MovieDbApplication;
@@ -33,6 +37,9 @@ public class MoviesListActivity extends BaseActivity implements MoviesContract.V
     @BindView(R.id.movies_list)
     RecyclerView mMoviesList;
 
+    @BindView(R.id.progress)
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +56,12 @@ public class MoviesListActivity extends BaseActivity implements MoviesContract.V
         moviesAdapter.setMovieSelectedListener(new MoviesAdapter.MovieSelectedListener() {
             @Override
             public void onClick(View view, int position) {
+                Toast.makeText(MoviesListActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
                 showMovieDetails(moviesAdapter.getMovie(position));
             }
         });
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mMoviesList.setLayoutManager(linearLayoutManager);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mMoviesList.setLayoutManager(layoutManager);
         mMoviesList.setAdapter(moviesAdapter);
     }
 
@@ -73,7 +81,10 @@ public class MoviesListActivity extends BaseActivity implements MoviesContract.V
     }
 
     @Override
-    public void showLoadingUi() {
+    public void showLoadingUi(boolean show) {
+        if (show) progressBar.setVisibility(View.VISIBLE);
+
+        else progressBar.setVisibility(View.GONE);
 
     }
 

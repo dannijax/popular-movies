@@ -14,7 +14,7 @@ public interface MoviesContract {
 
     interface View extends BaseView {
         void loadMovies(List<Movies> movies);
-        void showLoadingUi();
+        void showLoadingUi(boolean show);
         void showError();
         void showEmptyMovies();
 
