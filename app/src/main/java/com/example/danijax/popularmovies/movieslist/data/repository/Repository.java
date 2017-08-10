@@ -11,5 +11,5 @@ import io.reactivex.Observable;
 public interface Repository <T>{
     Observable<List<T>> getAll();
 
-    Observable<T> get(String id);
+    Observable<T> get(long id);
 }

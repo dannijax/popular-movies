@@ -35,7 +35,7 @@ public class MoviesRepository  implements Repository<Movies>{
     }
 
     @Override
-    public Observable<Movies> get(String id) {
-        return null;
+    public Observable<Movies> get(long id) {
+        return apiClient.getMovie(id, BuildConfig.API_KEY);
     }
 }
