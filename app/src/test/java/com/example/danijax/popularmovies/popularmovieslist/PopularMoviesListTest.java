@@ -32,13 +32,16 @@ public class PopularMoviesListTest {
     private List<Movies> moviesList = new ArrayList<>(Arrays.asList(
             new Movies("Iron man is a big fool"), new Movies("Batman is a legend"),
             new Movies("Superman is no super man")));
+
     private ResponseWrapper<Movies> responseWrapper = new ResponseWrapper<>();
+
     private MoviesListPresenter popularMoviesListPresenter;
 
     @Mock
     private MoviesContract.View popularMoviesListView;
 
     Repository moviesRepository;
+
     @Mock
     ApiClient apiClient;
 
@@ -55,7 +58,7 @@ public class PopularMoviesListTest {
     @Test
     public void loadMoviesFromRepository() throws Exception {
         //fail("Not yet implemented");
-        when(apiClient.getMovies()).thenReturn(Observable.just(responseWrapper));
+        when(apiClient.getMovies("")).thenReturn(Observable.just(responseWrapper));
         TestObserver<List<Movies>> testSubscriber = TestObserver.create().create();
         moviesRepository.getAll().subscribe(testSubscriber);
         testSubscriber.awaitTerminalEvent();
@@ -71,11 +74,12 @@ public class PopularMoviesListTest {
     public void loadMoviesInView() throws Exception {
         popularMoviesListPresenter.loadMovies(moviesList);
         verify(popularMoviesListView).loadMovies(moviesList);
+        verify(popularMoviesListView).showLoadingUi(true);
     }
 
     @Test
     public void getMoviesFromApiReturnsListOfMovies() {
-        when(apiClient.getMovies()).thenReturn(Observable.just(responseWrapper));
+        when(apiClient.getMovies("")).thenReturn(Observable.just(responseWrapper));
         TestObserver<List<Movies>> testSubscriber = TestObserver.create().create();
         moviesRepository.getAll().subscribe(testSubscriber);
         testSubscriber.awaitTerminalEvent();
