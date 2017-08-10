@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class MovieDetails extends BaseActivity implements MovieDetailsContract.View {
+public class MovieDetailsView extends BaseActivity implements MovieDetailsContract.View {
 
     private Unbinder unbinder;
     private MovieDetailsPresenter movieDetailsPresenter;
@@ -97,7 +97,7 @@ public class MovieDetails extends BaseActivity implements MovieDetailsContract.V
 
     @Override
     public void showError() {
-
+        makeSnackBarMessage("An error has occurred");
     }
 
     @Override

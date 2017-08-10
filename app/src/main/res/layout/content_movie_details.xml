@@ -5,7 +5,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.danijax.popularmovies.movieslist.ui.moviedetails.MovieDetails"
-    tools:showIn="@layout/activity_movie_details">
+    tools:context="com.example.danijax.popularmovies.movieslist.ui.moviedetails.MovieDetailsView"
+    tools:showIn="@layout/activity_movie_details"
+    android:transitionName="@string/movies_transition"
+    android:background="@color/black">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.727"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="@dimen/gutter_size"
+            android:paddingLeft="@dimen/gutter_size"
+            android:paddingRight="@dimen/gutter_size"
+            android:paddingTop="@dimen/gutter_size">
+
+            <TextView
+                android:id="@+id/movie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginRight="@dimen/gutter_size"/>
+
+
+
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/gutter_size"
+                android:layout_below="@+id/movie_title"
+                android:id="@+id/image_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/poster"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:layout_marginRight="8dp"
+                    android:id="@+id/rating_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/fav_added"
+                    android:layout_toEndOf="@+id/poster"/>
+                <TextView
+                    android:layout_toEndOf="@+id/rating_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.5"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:id="@+id/rating"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginBottom="@dimen/gutter_size"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/overview"
+                android:layout_below="@+id/image_container"/>
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true" />
+
+            <ImageButton
+                android:id="@+id/share"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/overview"
+                android:background="@color/colorAccent"
+                android:src="@drawable/ic_share"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                />
+
+        </RelativeLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
