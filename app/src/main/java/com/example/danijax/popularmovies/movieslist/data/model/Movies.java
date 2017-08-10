@@ -15,6 +15,8 @@ public class Movies {
     private String mOverview;
     @SerializedName("popularity")
     private Double mPopularity;
+    @SerializedName("backdrop_path")
+    private String backdropPath;
     @SerializedName("poster_path")
     private String mPosterPath;
     @SerializedName("release_date")
@@ -98,5 +100,11 @@ public class Movies {
         mVoteCount = voteCount;
     }
 
+    public String getBackdropPath() {
+        return backdropPath;
+    }
 
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
 }

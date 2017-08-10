@@ -16,7 +16,7 @@ import com.example.danijax.popularmovies.movieslist.data.model.Movies;
 import com.example.danijax.popularmovies.movieslist.data.repository.MoviesRepository;
 import com.example.danijax.popularmovies.movieslist.ui.adapter.MoviesAdapter;
 import com.example.danijax.popularmovies.movieslist.ui.base.BaseActivity;
-import com.example.danijax.popularmovies.movieslist.ui.moviedetails.MovieDetails;
+import com.example.danijax.popularmovies.movieslist.ui.moviedetails.MovieDetailsView;
 import com.example.danijax.popularmovies.movieslist.util.Constants;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class MoviesListActivity extends BaseActivity implements MoviesContract.View {
+public class MoviesListView extends BaseActivity implements MoviesContract.View {
 
     private MoviesContract.Presenter moviesPresenter;
     private Unbinder unbinder;
@@ -59,7 +59,7 @@ public class MoviesListActivity extends BaseActivity implements MoviesContract.V
         moviesAdapter.setMovieSelectedListener(new MoviesAdapter.MovieSelectedListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(MoviesListActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MoviesListView.this, "Clicked", Toast.LENGTH_SHORT).show();
                 Movies movie = moviesAdapter.getMovie(position);
                 showMovieDetails(movie.getId(), movie.getTitle(), view);
             }
@@ -70,7 +70,7 @@ public class MoviesListActivity extends BaseActivity implements MoviesContract.V
     }
 
     private void showMovieDetails(long id, String title, View view) {
-        Intent intent = new Intent(this, MovieDetails.class);
+        Intent intent = new Intent(this, MovieDetailsView.class);
         intent.putExtra(Constants.MOVIE_ID, id);
         intent.putExtra(Constants.MOVIE_TITLE, title);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,view, getString(R.string.movies_transition) );

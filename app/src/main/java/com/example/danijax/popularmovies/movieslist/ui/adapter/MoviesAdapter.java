@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.danijax.popularmovies.R;
 import com.example.danijax.popularmovies.movieslist.data.model.Movies;
+import com.example.danijax.popularmovies.movieslist.util.Constants;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -27,8 +28,6 @@ import butterknife.Unbinder;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
 
     private static final String TAG = MoviesAdapter.class.getSimpleName();
-
-    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500/";
 
     private List<Movies> mMovies;
 
@@ -85,7 +84,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         void bindMovie(@NonNull Movies movies) {
             Picasso.with(itemView.getContext())
-                    .load(IMAGE_BASE_URL + movies.getPosterPath())
+                    .load(Constants.IMAGE_BASE_URL + movies.getPosterPath())
                     .into(movieCover, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -105,7 +104,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
                     mMovieSelectedListener.onClick(v, getAdapterPosition());
                 }
             });
-            Log.e(TAG, "bindMovie: " + IMAGE_BASE_URL + movies.getPosterPath());
+            Log.e(TAG, "bindMovie: " + Constants.IMAGE_BASE_URL + movies.getPosterPath());
         }
     }
 
