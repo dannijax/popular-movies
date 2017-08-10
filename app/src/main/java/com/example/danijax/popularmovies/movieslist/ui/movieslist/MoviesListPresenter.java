@@ -81,6 +81,7 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
         @Override
         public void onError(@NonNull Throwable e) {
             movieListView.showLoadingUi(false);
+            movieListView.showError();
         }
 
         @Override

@@ -28,6 +28,7 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
 
     public MovieDetailsPresenter(Repository moviesRepository) {
         this.moviesRepository = moviesRepository;
+        disposable = new CompositeDisposable();
     }
 
     @Override
@@ -56,7 +57,7 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
         Observable<Movies> moviesObservable = observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        moviesObservable.subscribeWith(new MovieObserver());
+       disposable.add( moviesObservable.subscribeWith(new MovieObserver()));
 
     }
 

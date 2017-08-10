@@ -67,7 +67,9 @@ public class MovieDetailsView extends BaseActivity implements MovieDetailsContra
         toolbar.setTitle(movieTitle);
         setSupportActionBar(toolbar);
         unbinder = ButterKnife.bind(this);
-        ((MovieDbApplication) getApplication()).getMovieDbComponent().inject(this);
+        ((MovieDbApplication) getApplication())
+                .getMovieDbComponent()
+                .inject(this);
         setupPresenter();
 
     }
@@ -75,7 +77,9 @@ public class MovieDetailsView extends BaseActivity implements MovieDetailsContra
     private void setupPresenter() {
         movieDetailsPresenter = new MovieDetailsPresenter(moviesRepository);
         movieDetailsPresenter.attach(this);
-        movieDetailsPresenter.getMovieDetails(getIntent().getLongExtra(Constants.MOVIE_ID, 0));
+        movieDetailsPresenter
+                .getMovieDetails(getIntent()
+                        .getLongExtra(Constants.MOVIE_ID, 0));
     }
 
     @Override
@@ -105,16 +109,23 @@ public class MovieDetailsView extends BaseActivity implements MovieDetailsContra
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("TAG", "onClick: " );
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, movies.getOverview());
-                sendIntent.putExtra(Intent.EXTRA_STREAM, Constants.IMAGE_BASE_URL.contains(movies.getBackdropPath()));
+                sendIntent.putExtra(Intent.EXTRA_STREAM,
+                        Constants.IMAGE_BASE_URL.contains(movies.getBackdropPath()));
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
             }
         });
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbinder.unbind();
+        movieDetailsPresenter.dettach();
+        super.onDestroy();
     }
 }
