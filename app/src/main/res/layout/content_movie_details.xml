@@ -57,6 +57,7 @@
                     android:scaleType="centerCrop" />
 
                 <ImageView
+                    android:paddingLeft="@dimen/gutter_size"
                     android:layout_marginRight="8dp"
                     android:id="@+id/rating_icon"
                     android:layout_width="wrap_content"

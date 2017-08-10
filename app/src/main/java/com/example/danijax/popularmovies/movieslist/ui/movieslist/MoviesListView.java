@@ -73,7 +73,7 @@ public class MoviesListView extends BaseActivity implements MoviesContract.View 
         intent.putExtra(Constants.MOVIE_ID, id);
         intent.putExtra(Constants.MOVIE_TITLE, title);
         ActivityOptionsCompat options = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(this,view, getString(R.string.movies_transition) );
+                .makeSceneTransitionAnimation(this, view, getString(R.string.movies_transition));
         startActivity(intent, options.toBundle());
     }
 

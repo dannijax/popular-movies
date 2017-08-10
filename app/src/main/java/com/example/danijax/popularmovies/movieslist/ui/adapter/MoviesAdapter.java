@@ -86,6 +86,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             Picasso.with(itemView.getContext())
                     .load(Constants.IMAGE_BASE_URL + movies.getPosterPath())
                     .into(movieCover);
+
             movieTitle.setText(movies.getTitle());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
