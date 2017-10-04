@@ -7,6 +7,7 @@ import com.example.danijax.popularmovies.movieslist.data.repository.MoviesReposi
 import com.example.danijax.popularmovies.movieslist.data.repository.Repository;
 import com.example.danijax.popularmovies.movieslist.ui.movieslist.MoviesContract;
 import com.example.danijax.popularmovies.movieslist.ui.movieslist.MoviesListPresenter;
+import com.example.danijax.popularmovies.movieslist.util.schedulers.ImmediateScheduler;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,10 +24,6 @@ import io.reactivex.observers.TestObserver;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by danijax on 7/26/17.
- */
-
 public class PopularMoviesListTest {
 
     private List<Movies> moviesList = new ArrayList<>(Arrays.asList(
@@ -34,7 +31,6 @@ public class PopularMoviesListTest {
             new Movies("Superman is no super man")));
 
     private ResponseWrapper<Movies> responseWrapper = new ResponseWrapper<>();
-
     private MoviesListPresenter popularMoviesListPresenter;
 
     @Mock
@@ -49,7 +45,7 @@ public class PopularMoviesListTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         moviesRepository = new MoviesRepository(apiClient);
-        popularMoviesListPresenter = new MoviesListPresenter(moviesRepository);
+        popularMoviesListPresenter = new MoviesListPresenter(moviesRepository, new ImmediateScheduler());
         popularMoviesListPresenter.attach(popularMoviesListView);
         responseWrapper.setResults(moviesList);
     }

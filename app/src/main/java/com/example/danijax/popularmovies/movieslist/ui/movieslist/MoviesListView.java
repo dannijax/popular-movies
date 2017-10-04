@@ -34,7 +34,7 @@ public class MoviesListView extends BaseActivity implements MoviesContract.View 
     private MoviesAdapter moviesAdapter;
 
     @Inject
-    MoviesRepository moviesRepository;
+    MoviesListPresenter moviesListPresenter;
 
     @BindView(R.id.movies_list)
     RecyclerView mMoviesList;
@@ -78,7 +78,6 @@ public class MoviesListView extends BaseActivity implements MoviesContract.View 
     }
 
     private void setupPresenter() {
-        moviesPresenter = new MoviesListPresenter(moviesRepository);
         moviesPresenter.attach(this);
         moviesPresenter.getAllMovies();
     }

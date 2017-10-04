@@ -7,9 +7,6 @@ import com.example.danijax.popularmovies.movieslist.injection.components.MovieDb
 import com.example.danijax.popularmovies.movieslist.injection.module.ContextModule;
 import com.facebook.stetho.Stetho;
 
-/**
- * Created by danijax on 7/26/17.
- */
 
 public class MovieDbApplication extends Application {
 

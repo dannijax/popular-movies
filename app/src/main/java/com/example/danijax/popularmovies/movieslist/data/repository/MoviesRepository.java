@@ -7,6 +7,8 @@ import com.example.danijax.popularmovies.movieslist.data.network.ApiClient;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
@@ -19,6 +21,7 @@ public class MoviesRepository  implements Repository<Movies>{
 
     private ApiClient apiClient;
 
+    @Inject
     public MoviesRepository(ApiClient apiClient) {
         this.apiClient = apiClient;
     }

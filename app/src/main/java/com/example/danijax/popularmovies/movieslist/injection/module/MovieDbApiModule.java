@@ -12,9 +12,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by danijax on 7/26/17.
- */
+
 @Module(includes = NetworkModule.class)
 public class MovieDbApiModule {
 
@@ -29,8 +27,8 @@ public class MovieDbApiModule {
                 .build();
     }
 
-    @Singleton
     @Provides
+    @Singleton
     public ApiClient apiClient(Retrofit retrofit) {
         return retrofit.create(ApiClient.class);
     }

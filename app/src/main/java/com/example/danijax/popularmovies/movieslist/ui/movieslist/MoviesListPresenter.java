@@ -6,8 +6,11 @@ import com.example.danijax.popularmovies.movieslist.data.model.DefaultObserver;
 import com.example.danijax.popularmovies.movieslist.data.model.Movies;
 import com.example.danijax.popularmovies.movieslist.data.repository.Repository;
 import com.example.danijax.popularmovies.movieslist.ui.base.BaseView;
+import com.example.danijax.popularmovies.movieslist.util.schedulers.BaseScheduler;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,9 +18,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by danijax on 7/26/17.
- */
 
 public class MoviesListPresenter implements MoviesContract.Presenter {
 
@@ -25,12 +25,17 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
 
     private MoviesContract.View movieListView;
 
-    private Repository moviesRepository;
+    private Repository<Movies> moviesRepository;
 
     private CompositeDisposable disposable;
 
-    public MoviesListPresenter(Repository moviesRepository) {
+    private BaseScheduler scheduler;
+
+
+    @Inject
+    public MoviesListPresenter(Repository<Movies> moviesRepository, BaseScheduler scheduler) {
         this.moviesRepository = moviesRepository;
+        this.scheduler = scheduler;
         disposable = new CompositeDisposable();
     }
 
@@ -64,8 +69,8 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
 
     private void subscribeToMoviesList(Observable<List<Movies>> mo) {
         Observable<List<Movies>> observable = mo
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui());
         disposable.add(observable
         .subscribeWith(new MoviesListObserver()));
 
