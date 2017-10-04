@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.danijax.popularmovies.movieslist.injection.components.DaggerMovieDbComponent;
 import com.example.danijax.popularmovies.movieslist.injection.components.MovieDbComponent;
 import com.example.danijax.popularmovies.movieslist.injection.module.ContextModule;
+import com.example.danijax.popularmovies.movieslist.injection.module.RepositoryModule;
 import com.facebook.stetho.Stetho;
 
 

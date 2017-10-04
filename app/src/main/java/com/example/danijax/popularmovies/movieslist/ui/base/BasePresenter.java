@@ -6,5 +6,5 @@ package com.example.danijax.popularmovies.movieslist.ui.base;
 
 public interface BasePresenter {
     void attach(BaseView view);
-    void dettach();
+    void detach();
 }

@@ -11,8 +11,7 @@ import android.widget.ProgressBar;
 
 import com.example.danijax.popularmovies.R;
 import com.example.danijax.popularmovies.movieslist.MovieDbApplication;
-import com.example.danijax.popularmovies.movieslist.data.model.Movies;
-import com.example.danijax.popularmovies.movieslist.data.repository.MoviesRepository;
+import com.example.danijax.popularmovies.movieslist.data.model.Movie;
 import com.example.danijax.popularmovies.movieslist.ui.adapter.MoviesAdapter;
 import com.example.danijax.popularmovies.movieslist.ui.base.BaseActivity;
 import com.example.danijax.popularmovies.movieslist.ui.moviedetails.MovieDetailsView;
@@ -29,7 +28,6 @@ import butterknife.Unbinder;
 
 public class MoviesListView extends BaseActivity implements MoviesContract.View {
 
-    private MoviesContract.Presenter moviesPresenter;
     private Unbinder unbinder;
     private MoviesAdapter moviesAdapter;
 
@@ -54,11 +52,11 @@ public class MoviesListView extends BaseActivity implements MoviesContract.View 
     }
 
     private void setupRecyclerView() {
-        moviesAdapter = new MoviesAdapter(new ArrayList<Movies>());
+        moviesAdapter = new MoviesAdapter(new ArrayList<Movie>());
         moviesAdapter.setMovieSelectedListener(new MoviesAdapter.MovieSelectedListener() {
             @Override
             public void onClick(View view, int position) {
-                Movies movie = moviesAdapter.getMovie(position);
+                Movie movie = moviesAdapter.getMovie(position);
                 showMovieDetails(movie.getId(), movie.getTitle(), view);
             }
         });
@@ -78,12 +76,12 @@ public class MoviesListView extends BaseActivity implements MoviesContract.View 
     }
 
     private void setupPresenter() {
-        moviesPresenter.attach(this);
-        moviesPresenter.getAllMovies();
+        moviesListPresenter.attach(this);
+        moviesListPresenter.getAllMovies();
     }
 
     @Override
-    public void loadMovies(List<Movies> movies) {
+    public void loadMovies(List<Movie> movies) {
         moviesAdapter.addMovies(movies);
     }
 
@@ -108,7 +106,7 @@ public class MoviesListView extends BaseActivity implements MoviesContract.View 
     @Override
     protected void onDestroy() {
         unbinder.unbind();
-        moviesPresenter.dettach();
+        moviesListPresenter.detach();
         super.onDestroy();
     }
 

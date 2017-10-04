@@ -7,7 +7,7 @@ import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
-public class Movies {
+public class Movie {
 
     @SerializedName("id")
     private Long mId;
@@ -28,10 +28,10 @@ public class Movies {
     @SerializedName("vote_count")
     private Long mVoteCount;
 
-    public Movies() {
+    public Movie() {
     }
 
-    public Movies(String mTitle) {
+    public Movie(String mTitle) {
         this.mTitle = mTitle;
     }
 

@@ -1,5 +1,6 @@
 package com.example.danijax.popularmovies.movieslist.injection.components;
 
+
 import com.example.danijax.popularmovies.movieslist.injection.module.RepositoryModule;
 import com.example.danijax.popularmovies.movieslist.injection.module.SchedulerModule;
 import com.example.danijax.popularmovies.movieslist.ui.moviedetails.MovieDetailsView;

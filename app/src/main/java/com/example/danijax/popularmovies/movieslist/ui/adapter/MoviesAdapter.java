@@ -2,7 +2,6 @@ package com.example.danijax.popularmovies.movieslist.ui.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.danijax.popularmovies.R;
-import com.example.danijax.popularmovies.movieslist.data.model.Movies;
+import com.example.danijax.popularmovies.movieslist.data.model.Movie;
 import com.example.danijax.popularmovies.movieslist.util.Constants;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -27,11 +25,11 @@ import butterknife.Unbinder;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
 
-    private List<Movies> mMovies;
+    private List<Movie> mMovies;
 
     private MovieSelectedListener mMovieSelectedListener;
 
-    public MoviesAdapter(@NonNull List<Movies> movies) {
+    public MoviesAdapter(@NonNull List<Movie> movies) {
         this.mMovies = movies;
     }
 
@@ -54,7 +52,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         return mMovies.size();
     }
 
-    public void addMovies(@NonNull List<Movies> movies) {
+    public void addMovies(@NonNull List<Movie> movies) {
         this.mMovies.addAll(movies);
         notifyDataSetChanged();
     }
@@ -63,7 +61,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         this.mMovieSelectedListener = movieSelectedListener;
     }
 
-    public Movies getMovie(int position) {
+    public Movie getMovie(int position) {
         return mMovies.get(position);
     }
 
@@ -82,12 +80,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             unbinder = ButterKnife.bind(this, itemView);
         }
 
-        void bindMovie(@NonNull Movies movies) {
+        void bindMovie(@NonNull Movie movie) {
             Picasso.with(itemView.getContext())
-                    .load(Constants.IMAGE_BASE_URL + movies.getPosterPath())
+                    .load(Constants.IMAGE_BASE_URL + movie.getPosterPath())
                     .into(movieCover);
 
-            movieTitle.setText(movies.getTitle());
+            movieTitle.setText(movie.getTitle());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

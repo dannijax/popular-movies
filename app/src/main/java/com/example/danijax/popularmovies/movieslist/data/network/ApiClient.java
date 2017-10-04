@@ -1,6 +1,6 @@
 package com.example.danijax.popularmovies.movieslist.data.network;
 
-import com.example.danijax.popularmovies.movieslist.data.model.Movies;
+import com.example.danijax.popularmovies.movieslist.data.model.Movie;
 import com.example.danijax.popularmovies.movieslist.data.model.ResponseWrapper;
 
 import io.reactivex.Observable;
@@ -15,10 +15,10 @@ import retrofit2.http.Query;
 public interface ApiClient {
 
     @GET("discover/movie")
-    Observable<ResponseWrapper<Movies>> getMovies(@Query("api_key") String apiKey);
+    Observable<ResponseWrapper<Movie>> getMovies(@Query("api_key") String apiKey);
 
     @GET("movie/{movieId}")
-    Observable<Movies> getMovie(@Path("movieId") long movieId, @Query("api_key") String apiKey);
+    Observable<Movie> getMovie(@Path("movieId") long movieId, @Query("api_key") String apiKey);
 
 
 }

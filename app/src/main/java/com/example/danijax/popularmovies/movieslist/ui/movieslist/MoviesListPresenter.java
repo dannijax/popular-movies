@@ -1,9 +1,7 @@
 package com.example.danijax.popularmovies.movieslist.ui.movieslist;
 
-import android.util.Log;
-
 import com.example.danijax.popularmovies.movieslist.data.model.DefaultObserver;
-import com.example.danijax.popularmovies.movieslist.data.model.Movies;
+import com.example.danijax.popularmovies.movieslist.data.model.Movie;
 import com.example.danijax.popularmovies.movieslist.data.repository.Repository;
 import com.example.danijax.popularmovies.movieslist.ui.base.BaseView;
 import com.example.danijax.popularmovies.movieslist.util.schedulers.BaseScheduler;
@@ -13,10 +11,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class MoviesListPresenter implements MoviesContract.Presenter {
@@ -25,7 +21,7 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
 
     private MoviesContract.View movieListView;
 
-    private Repository<Movies> moviesRepository;
+    private Repository<Movie> moviesRepository;
 
     private CompositeDisposable disposable;
 
@@ -33,20 +29,21 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
 
 
     @Inject
-    public MoviesListPresenter(Repository<Movies> moviesRepository, BaseScheduler scheduler) {
+    public MoviesListPresenter(Repository<Movie> moviesRepository, BaseScheduler scheduler) {
         this.moviesRepository = moviesRepository;
         this.scheduler = scheduler;
         disposable = new CompositeDisposable();
     }
 
-    @Override
-    public void loadMovies(List<Movies> movies) {
-        movieListView.showLoadingUi(true);
-        movieListView.loadMovies(movies);
+    private void loadMovies(List<Movie> movies) {
+        if (movies.isEmpty()) movieListView.showEmptyMovies();
+
+        else movieListView.loadMovies(movies);
     }
 
     @Override
     public void getAllMovies() {
+        movieListView.showLoadingUi(true);
         subscribeToMoviesList(moviesRepository.getAll());
 
     }
@@ -58,7 +55,7 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
     }
 
     @Override
-    public void dettach() {
+    public void detach() {
         this.movieListView = null;
         unsubscribe();
     }
@@ -67,8 +64,8 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
         disposable.dispose();
     }
 
-    private void subscribeToMoviesList(Observable<List<Movies>> mo) {
-        Observable<List<Movies>> observable = mo
+    private void subscribeToMoviesList(Observable<List<Movie>> mo) {
+        Observable<List<Movie>> observable = mo
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui());
         disposable.add(observable
@@ -76,9 +73,9 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
 
     }
 
-    private class MoviesListObserver extends DefaultObserver<List<Movies>> {
+    private class MoviesListObserver extends DefaultObserver<List<Movie>> {
         @Override
-        public void onNext(@NonNull List<Movies> movies) {
+        public void onNext(@NonNull List<Movie> movies) {
             loadMovies(movies);
             movieListView.showLoadingUi(false);
         }
@@ -92,7 +89,7 @@ public class MoviesListPresenter implements MoviesContract.Presenter {
         @Override
         public void onComplete() {
             super.onComplete();
-            movieListView.showLoadingUi(false);
+            //movieListView.showLoadingUi(false);
         }
     }
 }

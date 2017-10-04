@@ -1,25 +1,24 @@
 package com.example.danijax.popularmovies.movieslist.ui.moviedetails;
 
-import com.example.danijax.popularmovies.movieslist.data.model.Movies;
+import com.example.danijax.popularmovies.movieslist.data.model.Movie;
 import com.example.danijax.popularmovies.movieslist.ui.base.BasePresenter;
 import com.example.danijax.popularmovies.movieslist.ui.base.BaseView;
-
-/**
- * Created by danijax on 8/9/17.
- */
 
 public interface MovieDetailsContract {
 
     interface View extends BaseView{
-        void loadMovie(Movies movie);
+        void loadMovie(Movie movie);
         void showLoadingUi(boolean show);
         void showError();
-        void shareMovie(Movies movies);
+        void showEmptyMovieDetails();
+        void shareMovie(Movie movie);
+        void enableShareButton(boolean enable);
 
     }
 
     interface Presenter extends BasePresenter {
         void getMovieDetails(long movieId);
-        void loadMovie(Movies movieId);
+        void loadMovie(Movie movieId);
+        void shareMovie(Movie movieId);
     }
 }

@@ -1,12 +1,16 @@
 package com.example.danijax.popularmovies.movieslist.ui.moviedetails;
 
+import android.text.TextUtils;
+
 import com.example.danijax.popularmovies.movieslist.data.model.DefaultObserver;
-import com.example.danijax.popularmovies.movieslist.data.model.Movies;
+import com.example.danijax.popularmovies.movieslist.data.model.Movie;
 import com.example.danijax.popularmovies.movieslist.data.repository.Repository;
 import com.example.danijax.popularmovies.movieslist.ui.base.BaseView;
-import com.example.danijax.popularmovies.movieslist.ui.movieslist.MoviesContract;
+import com.example.danijax.popularmovies.movieslist.util.schedulers.BaseScheduler;
 
-import java.util.List;
+import org.w3c.dom.Text;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -14,20 +18,22 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by danijax on 8/9/17.
- */
+
 
 public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
 
-    private Repository moviesRepository;
+    private Repository<Movie> moviesRepository;
 
     private CompositeDisposable disposable;
 
     private MovieDetailsContract.View movieDetailsView;
 
-    public MovieDetailsPresenter(Repository moviesRepository) {
+    private BaseScheduler scheduler;
+
+    @Inject
+    public MovieDetailsPresenter(Repository<Movie> moviesRepository, BaseScheduler scheduler) {
         this.moviesRepository = moviesRepository;
+        this.scheduler = scheduler;
         disposable = new CompositeDisposable();
     }
 
@@ -38,7 +44,7 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     }
 
     @Override
-    public void dettach() {
+    public void detach() {
         this.movieDetailsView = null;
         unsubscribe();
     }
@@ -50,38 +56,51 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
 
     @Override
     public void getMovieDetails(long movieId) {
+        movieDetailsView.enableShareButton(false);
+        movieDetailsView.showLoadingUi(true);
         subscribe(moviesRepository.get(movieId));
     }
 
-    private void subscribe(Observable<Movies> observable) {
-        Observable<Movies> moviesObservable = observable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+    private void subscribe(Observable<Movie> observable) {
+        Observable<Movie> moviesObservable = observable
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui());
        disposable.add( moviesObservable.subscribeWith(new MovieObserver()));
 
     }
 
     @Override
-    public void loadMovie(Movies movie) {
-        movieDetailsView.loadMovie(movie);
+    public void loadMovie(Movie movie) {
+        if (movie.getTitle() == null && movie.getOverview() == null)
+            movieDetailsView.showEmptyMovieDetails();
+
+        else
+            movieDetailsView.loadMovie(movie);
     }
 
-    private class MovieObserver extends DefaultObserver<Movies> {
+    @Override
+    public void shareMovie(Movie movie) {
+        movieDetailsView.enableShareButton(false);
+        movieDetailsView.shareMovie(movie);
+    }
+
+    private class MovieObserver extends DefaultObserver<Movie> {
         @Override
-        public void onNext(@NonNull Movies movies) {
-            loadMovie(movies);
+        public void onNext(@NonNull Movie movie) {
+            loadMovie(movie);
             movieDetailsView.showLoadingUi(false);
+            movieDetailsView.enableShareButton(true);
         }
 
         @Override
         public void onError(@NonNull Throwable e) {
             movieDetailsView.showLoadingUi(false);
             movieDetailsView.showError();
+            movieDetailsView.enableShareButton(true);
         }
 
         @Override
         public void onComplete() {
-            movieDetailsView.showLoadingUi(false);
         }
     }
 }
